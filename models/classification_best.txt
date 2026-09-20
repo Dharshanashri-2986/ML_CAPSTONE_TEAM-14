@@ -1,0 +1,4 @@
+Logistic Regression
+Accuracy_test: 0.9835
+Weighted_F1_test: 0.9820
+ROC_AUC_test: 0.9857
