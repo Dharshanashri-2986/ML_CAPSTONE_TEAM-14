@@ -1,7 +1,7 @@
 # AeroShield — Turbofan Engine Predictive Maintenance (ML Capstone, Team 14)
 
 **Course:** 23CSE301 Machine Learning — B.Tech CSE, III Year, Amrita Vishwa Vidyapeetham (2026-27)
-**Tracks:** Regression · Classification · Clustering
+**Scope:** Review 1 — EDA & Preprocessing · Regression · Classification Part A
 
 ## Team
 
@@ -9,7 +9,7 @@
 |---|---|---|
 | _Name_ | _Roll no._ | Regression |
 | _Name_ | _Roll no._ | Classification |
-| _Name_ | _Roll no._ | Clustering |
+| _Name_ | _Roll no._ | EDA & Preprocessing |
 
 ## Problem Statement
 
@@ -17,7 +17,6 @@ Commercial turbofan engines degrade gradually until failure. Using multivariate 
 
 1. **Regression** — predict the **Remaining Useful Life (RUL)** of an engine, in operating cycles, at every cycle.
 2. **Classification** — flag engines in the **critical maintenance window** (`RUL <= 30` cycles → class 1, else class 0).
-3. **Clustering** — discover operating / health-state groupings in the telemetry without labels (Review 2).
 
 ## Dataset
 
@@ -77,27 +76,23 @@ All models are evaluated on the same held-out NASA test set (248 engines, 41,214
 
 (w) = weighted average. The test set is heavily imbalanced (2.1% critical-risk cycles), so also see the per-class recall in `notebooks/03_Classification.ipynb`.
 
-### Classification Part B & Clustering (Review 2)
-
-_To be added._
-
 ## Review 1 Coverage Map
 
 | Rubric | Where it is |
 |---|---|
-| A1 Dataset loading & audit | `regression.ipynb` → Part 1, §2 |
-| A2 EDA visualisations (every feature's distribution, heatmap, target, scatter plots) | `regression.ipynb` → Part 1, §3–7 |
+| A1 Dataset loading & audit | `01_EDA_Preprocessing.ipynb` → §2 |
+| A2 EDA visualisations (every feature's distribution, heatmap, target, scatter plots) | `01_EDA_Preprocessing.ipynb` → §3–7 |
 | A3 Insight commentary | Observation cells under each plot |
-| B1 Data cleaning (missing, duplicates, outliers) | `regression.ipynb` → Part 1, §2 and §9 |
-| B2 Encoding, scaling & splitting | `regression.ipynb` → Part 1, §11 (no categorical columns, so no encoding needed) |
-| B3 Feature engineering | `regression.ipynb` → Part 1, §10 |
-| C1 All 10 regression algorithms | `regression.ipynb` → Part 2, C1 (+ C1b per-algorithm checks) |
-| C2 Comparative table ranked by R² | `regression.ipynb` → Part 2, C1 summary |
-| C3 Hyperparameter tuning (≥ 2 models) | `regression.ipynb` → Part 2, C2 |
-| Mandatory 5-fold CV of top-2 models | `regression.ipynb` → Part 2, C3 |
-| C4 Residual, predicted-vs-actual, feature importance | `regression.ipynb` → Part 2, C4 |
-| D1 All 5 Part-A classifiers | `classification.ipynb` → Part 2 |
-| D2 Accuracy, weighted F1, confusion matrices, comparison table | `classification.ipynb` → Part 2, D1 summary & D2 |
+| B1 Data cleaning (missing, duplicates, outliers) | `01_EDA_Preprocessing.ipynb` → §2 and §9 |
+| B2 Encoding, scaling & splitting | `01_EDA_Preprocessing.ipynb` → §11 (no categorical columns, so no encoding needed) |
+| B3 Feature engineering | `01_EDA_Preprocessing.ipynb` → §10 |
+| C1 All 10 regression algorithms | `02_Regression.ipynb` → C1 (+ C1b per-algorithm checks) |
+| C2 Comparative table ranked by R² | `02_Regression.ipynb` → C1 summary |
+| C3 Hyperparameter tuning (≥ 2 models) | `02_Regression.ipynb` → C2 |
+| Mandatory 5-fold CV of top-2 models | `02_Regression.ipynb` → C3 |
+| C4 Residual, predicted-vs-actual, feature importance | `02_Regression.ipynb` → C4 |
+| D1 All 5 Part-A classifiers | `03_Classification.ipynb` |
+| D2 Accuracy, weighted F1, confusion matrices, comparison table | `03_Classification.ipynb` → D1 summary & D2 |
 
 ## Repository Structure
 
@@ -109,20 +104,18 @@ Follows guideline §8.
 ├── data/
 │   └── raw/NASA_FD004/       # raw dataset files (train / test / RUL)
 ├── notebooks/
-│   ├── regression.ipynb      # Part 1: audit, EDA, cleaning, feature engineering, split & scaling
-│   │                         # Part 2: 10 regression algorithms, tuning, CV, diagnostics   (Review 1)
-│   ├── classification.ipynb  # Part 1: data prep & class-focused EDA
-│   │                         # Part 2: 5 Part-A classifiers                                 (Review 1)
-│   └── clustering.ipynb      # skeleton that loads the shared features                      (Review 2)
+│   ├── 01_EDA_Preprocessing.ipynb  # audit, EDA, cleaning, feature engineering, leakage-free split & scaling
+│   ├── 02_Regression.ipynb         # 10 regression algorithms, comparison, tuning, 5-fold CV, diagnostics
+│   └── 03_Classification.ipynb     # 5 Part-A classifiers, comparison, confusion matrices, tuning, CV, ROC
 ├── models/                   # best-model summaries (.txt); .joblib files are written when the notebooks run
-├── app/                      # GUI / deployment (bonus, Review 2)
+├── app/                      # reserved for GUI code (not used in Review 1)
 ├── src/                      # shared, commented Python code used by every notebook
 │   ├── preprocessing/        #   loading, RUL target, audit, features, leakage-free split/scale, get_dataset()
 │   └── plotting.py           #   shared colourblind-friendly plot style
 └── reports/                  # result tables exported as CSV by the notebooks
 ```
 
-Every notebook loads its data through `src.preprocessing.get_dataset()`, so all algorithms in all tracks see exactly the same split. `regression.ipynb` also builds the same arrays step by step in Part 1 and asserts they match.
+Every notebook loads its data through `src.preprocessing.get_dataset()`, so all algorithms see exactly the same split. `01_EDA_Preprocessing.ipynb` builds the same arrays step by step and explains each preprocessing decision.
 
 ## Environment Setup
 
@@ -142,10 +135,11 @@ pip install -r requirements.txt
 jupyter notebook
 ```
 
-Open any notebook in `notebooks/` and choose **Kernel → Restart & Run All**. The notebooks are independent of each other and locate the repository root automatically, so they work whichever folder Jupyter was started from. Seeds are fixed (`random_state=42`), so results are reproducible.
+Open the notebooks in `notebooks/` in order (01 → 02 → 03) and choose **Kernel → Restart & Run All** for each. Each notebook is self-contained and locate the repository root automatically, so they work whichever folder Jupyter was started from. Seeds are fixed (`random_state=42`), so results are reproducible.
 
-- `regression.ipynb` takes several minutes (tree ensembles, GridSearch, 5-fold CV).
-- `classification.ipynb` takes a couple of minutes.
+- `01_EDA_Preprocessing.ipynb` takes under a minute.
+- `02_Regression.ipynb` takes several minutes (tree ensembles, GridSearch, 5-fold CV).
+- `03_Classification.ipynb` takes a couple of minutes.
 
 Outputs: result tables are written to `reports/`, best models and summaries to `models/`.
 
@@ -153,7 +147,7 @@ Outputs: result tables are written to `reports/`, best models and summaries to `
 
 Generative AI (Anthropic's Claude) was used for **code scaffolding only**:
 - reconstructing the shared `src/preprocessing` module;
-- restructuring the notebooks to the guideline layout, with EDA and preprocessing merged into the track notebooks;
+- restructuring the repository to the guideline layout;
 - robust path handling, engine-grouped cross-validation, and warning clean-up;
 - adding the per-algorithm parameter-sweep and data-preparation code cells, and code comments;
 - drafting this README's structure.
