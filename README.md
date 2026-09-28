@@ -81,29 +81,52 @@ All models are evaluated on the same held-out NASA test set (248 engines, 41,214
 
 _To be added._
 
+## Review 1 Coverage Map
+
+| Rubric | Where it is |
+|---|---|
+| A1 Dataset loading & audit | `regression.ipynb` → Part 1, §2 |
+| A2 EDA visualisations (every feature's distribution, heatmap, target, scatter plots) | `regression.ipynb` → Part 1, §3–7 |
+| A3 Insight commentary | Observation cells under each plot |
+| B1 Data cleaning (missing, duplicates, outliers) | `regression.ipynb` → Part 1, §2 and §9 |
+| B2 Encoding, scaling & splitting | `regression.ipynb` → Part 1, §11 (no categorical columns, so no encoding needed) |
+| B3 Feature engineering | `regression.ipynb` → Part 1, §10 |
+| C1 All 10 regression algorithms | `regression.ipynb` → Part 2, C1 (+ C1b per-algorithm checks) |
+| C2 Comparative table ranked by R² | `regression.ipynb` → Part 2, C1 summary |
+| C3 Hyperparameter tuning (≥ 2 models) | `regression.ipynb` → Part 2, C2 |
+| Mandatory 5-fold CV of top-2 models | `regression.ipynb` → Part 2, C3 |
+| C4 Residual, predicted-vs-actual, feature importance | `regression.ipynb` → Part 2, C4 |
+| D1 All 5 Part-A classifiers | `classification.ipynb` → Part 2 |
+| D2 Accuracy, weighted F1, confusion matrices, comparison table | `classification.ipynb` → Part 2, D1 summary & D2 |
+
 ## Repository Structure
 
+Follows guideline §8.
+
 ```
-├── README.md
-├── requirements.txt
-├── data/raw/NASA_FD004/        # raw dataset files
+├── README.md                 # this file
+├── requirements.txt          # Python dependencies with versions
+├── data/
+│   └── raw/NASA_FD004/       # raw dataset files (train / test / RUL)
 ├── notebooks/
-│   ├── 01_EDA_Preprocessing.ipynb   # dataset audit, EDA, cleaning, feature engineering, split & scaling
-│   ├── 02_Regression.ipynb          # 10 regression algorithms, tuning, CV, diagnostics
-│   └── 03_Classification.ipynb      # classification Part A (5 algorithms)
-├── src/
-│   ├── preprocessing/          # loading, RUL targets, audit, features, leakage-free split/scale, get_dataset()
-│   └── plotting.py             # shared plot style (colourblind palette)
-├── reports/                    # result tables exported as CSV by the notebooks
-├── models/                     # best-model summaries (.txt); .joblib files are generated locally
-└── app/                        # GUI / deployment (bonus, Review 2)
+│   ├── regression.ipynb      # Part 1: audit, EDA, cleaning, feature engineering, split & scaling
+│   │                         # Part 2: 10 regression algorithms, tuning, CV, diagnostics   (Review 1)
+│   ├── classification.ipynb  # Part 1: data prep & class-focused EDA
+│   │                         # Part 2: 5 Part-A classifiers                                 (Review 1)
+│   └── clustering.ipynb      # skeleton that loads the shared features                      (Review 2)
+├── models/                   # best-model summaries (.txt); .joblib files are written when the notebooks run
+├── app/                      # GUI / deployment (bonus, Review 2)
+├── src/                      # shared, commented Python code used by every notebook
+│   ├── preprocessing/        #   loading, RUL target, audit, features, leakage-free split/scale, get_dataset()
+│   └── plotting.py           #   shared colourblind-friendly plot style
+└── reports/                  # result tables exported as CSV by the notebooks
 ```
 
-All notebooks load data through `src.preprocessing.get_dataset()`, so every algorithm in a track sees exactly the same preprocessed split.
+Every notebook loads its data through `src.preprocessing.get_dataset()`, so all algorithms in all tracks see exactly the same split. `regression.ipynb` also builds the same arrays step by step in Part 1 and asserts they match.
 
 ## Environment Setup
 
-Python 3.10+ recommended.
+Python 3.10+ (tested on 3.12).
 
 ```bash
 git clone https://github.com/Dharshanashri-2986/ML_CAPSTONE_TEAM-14.git
@@ -116,17 +139,26 @@ pip install -r requirements.txt
 ## How to Run
 
 ```bash
-cd notebooks
 jupyter notebook
 ```
 
-Run the notebooks in order — **01 → 02 → 03** — with *Kernel → Restart & Run All*. The notebooks must be started from inside `notebooks/` (they add the repo root to `sys.path` to import `src`). Notebook 02 takes several minutes because of the tree ensembles, GridSearch and 5-fold CV.
+Open any notebook in `notebooks/` and choose **Kernel → Restart & Run All**. The notebooks are independent of each other and locate the repository root automatically, so they work whichever folder Jupyter was started from. Seeds are fixed (`random_state=42`), so results are reproducible.
 
-Outputs: result tables are written to `reports/`, best models to `models/`.
+- `regression.ipynb` takes several minutes (tree ensembles, GridSearch, 5-fold CV).
+- `classification.ipynb` takes a couple of minutes.
+
+Outputs: result tables are written to `reports/`, best models and summaries to `models/`.
 
 ## Use of AI Tools (Guideline 7.5)
 
-Generative AI (Anthropic's Claude) was used for **code scaffolding only**: reconstructing the shared `src/preprocessing` module, fixing notebook import/save paths, switching cross-validation to engine-grouped folds, adding parameter-sweep code cells, and drafting this README's structure. All analysis, interpretation, feature-engineering decisions and written observations in the notebooks are the team's own.
+Generative AI (Anthropic's Claude) was used for **code scaffolding only**:
+- reconstructing the shared `src/preprocessing` module;
+- restructuring the notebooks to the guideline layout, with EDA and preprocessing merged into the track notebooks;
+- robust path handling, engine-grouped cross-validation, and warning clean-up;
+- adding the per-algorithm parameter-sweep and data-preparation code cells, and code comments;
+- drafting this README's structure.
+
+All analysis, interpretation, feature-engineering decisions and written observations in the notebooks are the team's own.
 
 ## References
 
