@@ -7,9 +7,10 @@
 
 | Member | Roll No. | Primary track owned |
 |---|---|---|
-| _Name_ | _Roll no._ | Regression |
-| _Name_ | _Roll no._ | Classification |
-| _Name_ | _Roll no._ | EDA & Preprocessing |
+| Vuribindi Rohan Reddy | CB.SC.U4CSE24359 | EDA, Preprocessing & 1st 5 Regression |
+| S B Priyadharshika | CB.SC.U4CSE24344 | Last 5 Regression |
+| Dharshanashri S | CB.SC.U4CSE24314 | Classification |
+
 
 ## Problem Statement
 
@@ -47,7 +48,7 @@ Each row = one engine cycle, 26 space-separated columns: `unit_id`, `cycle`, 3 o
 
 All models are evaluated on the same held-out NASA test set (248 engines, 41,214 cycles).
 
-### Regression — RUL (Review 1)
+### Regression
 
 | Rank | Model | R² | RMSE (cycles) | MAE (cycles) |
 |---|---|---|---|---|
@@ -64,7 +65,7 @@ All models are evaluated on the same held-out NASA test set (248 engines, 41,214
 
 5-fold GroupKFold CV R² on the 200 training engines: **Gradient Boosting 0.5842 ± 0.0433**, **Random Forest 0.5807 ± 0.0458** (`notebooks/02_Regression.ipynb`, section C3).
 
-### Classification Part A — Critical-risk flag (Review 1)
+### Classification Part A
 
 | Rank | Model | Accuracy | Precision (w) | Recall (w) | F1 (w) | ROC-AUC |
 |---|---|---|---|---|---|---|
@@ -96,7 +97,7 @@ All models are evaluated on the same held-out NASA test set (248 engines, 41,214
 
 ## Repository Structure
 
-Follows guideline §8.
+Follows guideline 8.
 
 ```
 ├── README.md                 # this file
@@ -149,7 +150,7 @@ Generative AI (Anthropic's Claude) was used for **code scaffolding only**:
 - reconstructing the shared `src/preprocessing` module;
 - restructuring the repository to the guideline layout;
 - robust path handling, engine-grouped cross-validation, and warning clean-up;
-- adding the per-algorithm parameter-sweep and data-preparation code cells, and code comments;
+- adding the per-algorithm parameter-sweep and code comments;
 - drafting this README's structure.
 
 All analysis, interpretation, feature-engineering decisions and written observations in the notebooks are the team's own.
