@@ -1,16 +1,19 @@
-numpy>=1.23.0
-pandas>=1.5.0
-scikit-learn>=1.2.0
-scipy>=1.10.0
-matplotlib>=3.6.0
-seaborn>=0.12.0
-joblib>=1.2.0
-imbalanced-learn>=0.10.0
-xgboost>=2.0.0
-pyarrow>=14.0.0
-tqdm>=4.65.0
-jupyter>=1.0.0
-notebook>=7.0.0
-nbformat>=5.7.0
-nbconvert>=7.2.0
+# AeroShield — ML Capstone (Team 14) — Python dependencies
+# Tested with: Python 3.12, numpy 2.4, pandas 3.0, scikit-learn 1.8, matplotlib 3.10, seaborn 0.13
+# (pandas 3.x needs Python >= 3.11; on Python 3.9/3.10 pip will install pandas 2.x, which also works)
 
+# Core data & ML
+numpy>=1.24
+pandas>=2.0
+scikit-learn>=1.3
+scipy>=1.10
+joblib>=1.2
+
+# Visualisation (seaborn >= 0.13 is required for hue/legend=False in the box and bar plots)
+matplotlib>=3.7
+seaborn>=0.13
+
+# Notebooks
+jupyter>=1.0
+notebook>=7.0
+ipykernel>=6.0
