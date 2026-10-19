@@ -1,4 +1,6 @@
-Logistic Regression
-Accuracy_test: 0.9835
-Weighted_F1_test: 0.9820
-ROC_AUC_test: 0.9857
+Model: Gradient Boosting
+Accuracy_test: 0.9859
+Weighted_F1_test: 0.9851
+ROC_AUC_test: 0.9852
+Class_1_Recall_test: 0.5637
+False_Negatives_test: 377
