@@ -1,5 +1,5 @@
 Model: Gradient Boosting
-Accuracy_test: 0.9859
+Accuracy_test: 0.9858
 Weighted_F1_test: 0.9851
 ROC_AUC_test: 0.9852
 Class_1_Recall_test: 0.5637
