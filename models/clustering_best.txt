@@ -1,0 +1,47 @@
+================================================================================
+AeroShield — Turbofan Engine Predictive Maintenance (ML Capstone Team 14)
+Clustering Track Summary Report (Review 2, Track E)
+================================================================================
+Generated: 2026-10-20 04:02:53
+Dataset: NASA C-MAPSS FD004 (48,918 training cycles, 30 engineered features)
+Evaluation Benchmark Sample: N = 5,000 observations (Random Seed = 42)
+
+1. BEST CLUSTERING MODEL: K-Means (k=6)
+   - Discovered Clusters: 6 (Perfect alignment with FD004 6 flight regimes)
+   - Silhouette Score: 0.4170
+   - Davies-Bouldin Index: 1.0014
+   - Calinski-Harabasz Index: 7611.3
+   - Inertia: 174,299.5
+
+2. DENSITY-BASED BENCHMARK: DBSCAN (eps=2.0, min_samples=15)
+   - Discovered Clusters: 6 (Unassisted discovery without specifying k)
+   - Core Silhouette Score: 0.4832
+   - Core Davies-Bouldin Index: 1.1589
+   - Core Calinski-Harabasz: 6410.3
+   - Noise Rate: 0.02% (Anomalies/Transients)
+
+3. HIERARCHICAL BENCHMARK: Agglomerative (Ward Linkage, k=6)
+   - Silhouette Score: 0.4093
+   - Davies-Bouldin Index: 1.0203
+   - Calinski-Harabasz: 7498.9
+
+4. PROBABILISTIC BENCHMARK: Gaussian Mixture Model (GMM, k=6)
+   - BIC: -756,318.2
+   - AIC: -758,697.0
+   - Silhouette Score: 0.3362
+
+5. PHYSICAL FLIGHT REGIME MAPPING:
+ Cluster  Altitude_kft  Mach_Number  Throttle_TRA   Mean_RUL  Critical_Risk_Pct                  Flight Phase Description
+       0     20.002955     0.700506         100.0 132.519350          12.381215                    Medium-Altitude Cruise
+       1     39.424033     0.840502         100.0 125.840058          14.841499        Maximum-Altitude High-Speed Cruise
+       2     25.003064     0.620500          60.0 132.048369          12.592491             Mid-Altitude Descent / Loiter
+       3     39.326396     0.840501         100.0 138.241995          10.256410        Maximum-Altitude High-Speed Cruise
+       4      0.001513     0.000490         100.0 131.783949          12.561108 Sea-Level Static / Take-off / Ground Idle
+       5     10.023189     0.251410         100.0 133.846123          12.668282                        Low-Altitude Climb
+
+6. ARTIFACTS EXPORTED:
+   - Model: models/clustering_best.joblib
+   - Comparative Table: reports/clustering_results.csv
+   - K-Means Sweep: reports/clustering_kmeans_elbow.csv
+   - GMM Sweep: reports/clustering_gmm_selection.csv
+================================================================================
